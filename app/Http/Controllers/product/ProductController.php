@@ -34,10 +34,14 @@ class ProductController extends Controller
     {  
         if($request->hasfile('urlImage')) {
             $imagen=$request->file('urlImage')->store('public/imgs');
-            $url=Storage::url($imagen); 
-            $request['urlImage']=$url;         
+            $url=Storage::url($imagen);        
         }
-        Product::create($request->all());
+        Product::create([
+            'name'=>$request->name,
+            'description'=>$request->description,
+            'price'=>$request->price,
+            'urlImage'=>$url
+        ]);
         return redirect()->route('products.index');
     }
 
@@ -54,7 +58,7 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        //
+       return view('product.edit',compact('product'));
     }
 
 
