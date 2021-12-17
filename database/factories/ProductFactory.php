@@ -17,7 +17,7 @@ class ProductFactory extends Factory
             'name'=>$this->faker->name(),
             'description'=>$this->faker->sentence(),
             'price'=>10000,
-            'urlImage'=>$this->faker->image(),
+            'urlImage'=>'https://source.unsplash.com/random',
         ];
     }
 }
