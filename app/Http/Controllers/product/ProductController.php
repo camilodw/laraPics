@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProductRequest;
 use App\Models\Product;
-
+use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     /**
@@ -31,13 +31,19 @@ class ProductController extends Controller
 
  
     public function store(ProductRequest $request)
-    {
-        //
+    {  
+        if($request->hasfile('urlImage')) {
+            $imagen=$request->file('urlImage')->store('public/imgs');
+            $url=Storage::url($imagen); 
+            $request['urlImage']=$url;         
+        }
+        Product::create($request->all());
+        return redirect()->route('products.index');
     }
 
     public function show(Product $product)
     {
-        return view('layouts.view',compact('product'));
+        return view('product.show',compact('product'));
     }
 
     /**
@@ -46,7 +52,7 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Product $product)
     {
         //
     }
@@ -65,6 +71,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return redirect('products');
     }
 }
