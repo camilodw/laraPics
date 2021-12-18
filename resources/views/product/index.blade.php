@@ -31,7 +31,10 @@
             @endforelse
         </div>
         <div class="row">
-            {{ $products->links() }}
+            <div class="col-12 justify-content-center d-flex">
+                {{ $products->links() }}
+            </div>
+
         </div>
 
     </div>
