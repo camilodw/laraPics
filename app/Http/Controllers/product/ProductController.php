@@ -29,19 +29,15 @@ class ProductController extends Controller
         return view('product.create');
     }
 
- 
+
     public function store(ProductRequest $request)
-    {  
+    {
+        $product=$request->all();
         if($request->hasfile('urlImage')) {
-            $imagen=$request->file('urlImage')->store('public/imgs');
-            $url=Storage::url($imagen);        
+            $product['urlImage'] = $request->file('urlImage')->getClientOriginalName();
+            $request->file('urlImage')->storeAs('images', $product['urlImage']);
         }
-        Product::create([
-            'name'=>$request->name,
-            'description'=>$request->description,
-            'price'=>$request->price,
-            'urlImage'=>$url
-        ]);
+        Product::create($product);
         return redirect()->route('products.index');
     }
 
