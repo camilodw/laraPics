@@ -25,7 +25,7 @@
                         <p class="text text-danger">{{ $message }}</p>
                         @enderror
                         <label for="price" class="form-label">Price:</label>
-                        <input type="number" class="form-control" placeholder="inpu price" name="price" id="price">
+                        <input type="number" class="form-control" placeholder="input price" name="price" id="price">
                     </div>
                     <div class="form-group">
                         @error('urlImage')
@@ -33,7 +33,7 @@
                         @enderror
                         <label for="urlImage" class="form-label">Image</label>
                      <input type="file" id="urlImage"
-                            accept="image/*" name="urlImage">
+                            accept="image/*" name="urlImage" class="form-control">
                     </div>
                     <button class="btn btn-success form-control" type="submit">Save</button>
                 </form>
