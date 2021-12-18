@@ -7,7 +7,7 @@
             </div>
             @forelse ($products as $p)
                 <div class="card" style="width: 18rem;">
-                    <img src="{{ asset($p->urlImage) }}" class="card-img-top" alt="..." style="max-height: 174px">
+                    <img src="{{ $p->urlImage }}" class="card-img-top" alt="..." style="max-height: 174px">
                     <div class="card-body">
                         <h5 class="card-title">{{ $p->name }}</h5>
                         <p class="card-text">{{ $p->description }}</p>
@@ -15,14 +15,14 @@
                         <a href="{{ route('products.show', $p->id) }}" class="btn btn-primary form-control">View</a>
                         <div class="d-flex">
                            <div class="d-flex">
-                            <a class="btn btn-secondary"><i class="far fa-edit"></i></a>
+                            <a class="btn btn-secondary" href="{{route('products.edit',$p->id)}}"><i class="far fa-edit"></i></a>
                                 <form action="{{ route('products.destroy', $p->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                         <button type="submit" class=" btn btn-danger"><i
                                             class="fas fa-trash"></i></button>
-                                 </form>  
-                           </div>                           
+                                 </form>
+                           </div>
                         </div>
                     </div>
                 </div>
