@@ -7,7 +7,7 @@
             </div>
             @forelse ($products as $p)
                 <div class="card" style="width: 18rem;">
-                    <img src="/image/{{ $p->urlImage }}" class="card-img-top" alt="{{$p->name}}" style="max-height: 174px">
+                    <img src="{{ asset('storage').'/'.$p->urlImage }}" class="card-img-top" alt="{{$p->name}}" style="max-height: 174px">
                     <div class="card-body">
                         <h5 class="card-title">{{ $p->name }}</h5>
                         <p class="card-text">{{ $p->description }}</p>

@@ -32,16 +32,12 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        $input = $request->all();
 
+        $product = $request->all();
         if ($image = $request->file('urlImage')) {
-            $destinationPath = 'image/';
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $profileImage);
-            $input['urlImage'] = "$profileImage";
+            $product['urlImage']= $request->file('urlImage')->store('uploads','public');
         }
-
-        Product::create($input);
+        Product::create($product);
         return redirect()->route('products.index');
     }
 
@@ -67,17 +63,10 @@ class ProductController extends Controller
         $input = $request->all();
 
         if ($image = $request->file('urlImage')) {
-            //url de destino
-            $destinationPath = 'image/';
-            //le asigna al archivo como nombre la fecha y su extencion original
-            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            //mueve el archivo a la carpeta destino
-            $image->move($destinationPath, $profileImage);
-            //le asigna a el campo la url modificada
-            $input['urlImage'] = "$profileImage";
-        }else{
-            //no setea campo
-            unset($input['urlImage']);
+            //elimino imagen anterior
+
+            Storage::delete('public/'.$product->urlImage);
+            $input['urlImage']= $request->file('urlImage')->store('uploads','public');
         }
 
         $product->update($input);
@@ -92,6 +81,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        Storage::delete('public/'.$product->urlImage);
         $product->delete();
         return redirect('products');
     }
