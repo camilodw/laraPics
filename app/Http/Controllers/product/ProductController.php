@@ -3,7 +3,8 @@
 namespace App\Http\Controllers\product;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\Product\storeProductRequest;
+use App\Http\Requests\Product\updateProductRequest;
 use App\Models\Product;
 use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
@@ -30,7 +31,7 @@ class ProductController extends Controller
     }
 
 
-    public function store(ProductRequest $request)
+    public function store(storeProductRequest $request)
     {
 
         $product = $request->all();
@@ -58,7 +59,7 @@ class ProductController extends Controller
     }
 
 
-    public function update(ProductRequest $request,Product $product)
+    public function update(updateProductRequest $request,Product $product)
     {
         $input = $request->all();
 
