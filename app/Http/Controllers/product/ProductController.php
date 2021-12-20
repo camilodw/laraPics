@@ -32,12 +32,16 @@ class ProductController extends Controller
 
     public function store(ProductRequest $request)
     {
-        $product=$request->all();
-        if($request->hasfile('urlImage')) {
-            $product['urlImage'] = $request->file('urlImage')->getClientOriginalName();
-            $request->file('urlImage')->storeAs('images', $product['urlImage']);
+        $input = $request->all();
+
+        if ($image = $request->file('urlImage')) {
+            $destinationPath = 'image/';
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            $image->move($destinationPath, $profileImage);
+            $input['urlImage'] = "$profileImage";
         }
-        Product::create($product);
+
+        Product::create($input);
         return redirect()->route('products.index');
     }
 
@@ -58,9 +62,26 @@ class ProductController extends Controller
     }
 
 
-    public function update(ProductRequest $request, $id)
+    public function update(ProductRequest $request,Product $product)
     {
-        //
+        $input = $request->all();
+
+        if ($image = $request->file('urlImage')) {
+            //url de destino
+            $destinationPath = 'image/';
+            //le asigna al archivo como nombre la fecha y su extencion original
+            $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+            //mueve el archivo a la carpeta destino
+            $image->move($destinationPath, $profileImage);
+            //le asigna a el campo la url modificada
+            $input['urlImage'] = "$profileImage";
+        }else{
+            //no setea campo
+            unset($input['urlImage']);
+        }
+
+        $product->update($input);
+        return redirect()->route('products.index');
     }
 
     /**

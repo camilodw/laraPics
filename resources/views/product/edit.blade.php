@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-4 bg-white">
-            <form action="{{ route('products.update',$product->id) }}" enctype="multipart/form-data">
+            <form action="{{ route('products.update',$product->id) }}" enctype="multipart/form-data" method="POST">
                 @method('PUT')
                 @csrf
                 <div class="form-group">
