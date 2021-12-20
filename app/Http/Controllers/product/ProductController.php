@@ -65,11 +65,10 @@ class ProductController extends Controller
 
         if ($image = $request->file('urlImage')) {
             //elimino imagen anterior
-
             Storage::delete('public/'.$product->urlImage);
+            //le asigno al input la ruta de la imagen
             $input['urlImage']= $request->file('urlImage')->store('uploads','public');
         }
-
         $product->update($input);
         return redirect()->route('products.index');
     }
@@ -82,6 +81,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        //elimino la imagen luego el registro
         Storage::delete('public/'.$product->urlImage);
         $product->delete();
         return redirect('products');
